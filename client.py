@@ -1,8 +1,11 @@
 from ctrader_open_api import Client, Protobuf, TcpProtocol, EndPoints
 from ctrader_open_api.messages.OpenApiMessages_pb2 import *
+from ctrader_open_api.messages.OpenApiModelMessages_pb2 import *
 from twisted.internet import reactor
+from converters import proto_dict_connert
 import calendar
 import datetime
+
 
 class TraderClient:
     def __init__(self, client_id, client_secret, access_token, account_id, host_type="demo", command_queue=None):
@@ -13,9 +16,11 @@ class TraderClient:
         self.host_type = host_type
         self.client = None
         self.command_queue = command_queue
+
         self.commands = {
             "ProtoOAVersionReq": self.sendProtoOAVersionReq,
-            "ProtoOAGetAccountListByAccessTokenReq": self.sendProtoOAGetAccountListByAccessTokenReq
+            "ProtoOAGetAccountListByAccessTokenReq": self.sendProtoOAGetAccountListByAccessTokenReq,
+            "ProtoOAGetTrendbarsReq": self.sendProtoOAGetTrendbarsReq,
         }
 
     def setup_client(self):
@@ -36,13 +41,37 @@ class TraderClient:
         request.clientId = self.client_id
         request.clientSecret = self.client_secret
         deferred = self.client.send(request)
+        deferred.addCallback(lambda _: self.send_account_auth())
+        deferred.addErrback(self.on_error)
+
+    def send_account_auth(self, clientMsgId=None):
+        print("Sending account authorization...")
+        request = ProtoOAAccountAuthReq()
+        request.ctidTraderAccountId = self.account_id
+        request.accessToken = self.access_token
+        deferred = self.client.send(request, clientMsgId=clientMsgId)
         deferred.addErrback(self.on_error)
 
     def on_disconnected(self, client, reason):
         print("Disconnected:", reason)
 
     def on_message_received(self, client, message):
-        print("Message received")
+        print("\n--- New Message Received ---")
+        print(f"Payload Type: {message.payloadType}")
+
+        try:
+            extracted_message = Protobuf.extract(message)
+            print("Extracted message content:")
+            print(extracted_message)
+
+            if message.payloadType == ProtoOAGetTrendbarsRes().payloadType:
+                trendbars = proto_dict_connert(extracted_message.trendbar)
+                print("\n--- Trendbars converted to dict list ---")
+                print(trendbars)
+                print("--- CSV has been saved as trentbars_data.csv ---")
+        except Exception as e:
+            print("Error while processing message:", e)
+
         reactor.callLater(3, self.execute_user_command)
 
     def on_error(self, failure):
@@ -55,7 +84,9 @@ class TraderClient:
                 user_input = self.command_queue.get()
                 print(f"[Queue Command] Executing: {user_input}")
             else:
-                user_input = input("Command (ex: ProtoOAVersionReq): ")
+                print("No command in queue, skipping...")
+                reactor.callLater(3, self.execute_user_command)
+                return
         except Exception as e:
             print("Error reading command:", e)
             reactor.callLater(3, self.execute_user_command)
@@ -90,3 +121,22 @@ class TraderClient:
         request.accessToken = self.access_token
         deferred = self.client.send(request, clientMsgId=clientMsgId)
         deferred.addErrback(self.on_error)
+
+    def sendProtoOAGetTrendbarsReq(self, weeks, period, symbolId, clientMsgId=None):
+        try:
+            request = ProtoOAGetTrendbarsReq()
+            request.ctidTraderAccountId = self.account_id
+            request.period = ProtoOATrendbarPeriod.Value(period.upper())
+
+            now = datetime.datetime.utcnow()
+            from_ts = int(calendar.timegm((now - datetime.timedelta(weeks=int(weeks))).utctimetuple()) * 1000)
+            to_ts = int(calendar.timegm(now.utctimetuple()) * 1000)
+
+            request.fromTimestamp = from_ts
+            request.toTimestamp = to_ts
+            request.symbolId = int(symbolId)
+
+            deferred = self.client.send(request, clientMsgId=clientMsgId)
+            deferred.addErrback(self.on_error)
+        except Exception as e:
+            print("Trendbars request error:", e)

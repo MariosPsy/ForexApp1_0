@@ -1,6 +1,7 @@
 from multiprocessing import Queue
 from client import TraderClient
 
+
 if __name__ == "__main__":
     # Παράδειγμα τιμών - αντικατάστησέ τα με τα δικά σου credentials
     CLIENT_ID = "12898_X4w5r7eDmhqZcSjm7zBORbk9JRAbyO9a8RRvYvqQ3MTUdotn9v"
