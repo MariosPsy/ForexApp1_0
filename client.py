@@ -16,14 +16,15 @@ class TraderClient:
         self.host_type = host_type
         self.client = None
         self.command_queue = command_queue
+        self.account_authorized = False
 
         self.commands = {
-            "ProtoOAVersionReq": self.sendProtoOAVersionReq,
-            "ProtoOAGetAccountListByAccessTokenReq": self.sendProtoOAGetAccountListByAccessTokenReq,
-            "ProtoOAGetTrendbarsReq": self.sendProtoOAGetTrendbarsReq,
-            "ProtoOAAccountLogoutReq": self.sendProtoOAAccountLogoutReq,
-            "ProtoOAAssetClassListReq": self.sendProtoOAAssetClassListReq,
-            "ProtoOASymbolCategoryListReq": self.sendProtoOASymbolCategoryListReq,
+            "ProtoOAVersionReq": self.sendProtoOAVersionReq, #ΟΚ
+            "ProtoOAGetAccountListByAccessTokenReq": self.sendProtoOAGetAccountListByAccessTokenReq, # OK
+            "ProtoOAGetTrendbarsReq": self.sendProtoOAGetTrendbarsReq, #OK
+            "ProtoOAAccountLogoutReq": self.sendProtoOAAccountLogoutReq, # Do NOT Test
+            "ProtoOAAssetClassListReq": self.sendProtoOAAssetClassListReq, #ΟΚ
+            "ProtoOASymbolCategoryListReq": self.sendProtoOASymbolCategoryListReq, #ΟΚ
             "ProtoOASymbolsListReq": self.sendProtoOASymbolsListReq,
             "ProtoOATraderReq": self.sendProtoOATraderReq,
             "ProtoOAUnsubscribeSpotsReq": self.sendProtoOAUnsubscribeSpotsReq,
@@ -84,6 +85,10 @@ class TraderClient:
             print("Extracted message content:")
             print(extracted_message)
 
+            if message.payloadType == ProtoOAAccountAuthRes().payloadType:
+                print("✅ Λογαριασμός αυθεντικοποιήθηκε επιτυχώς.")
+                self.account_authorized = True
+
             if message.payloadType == ProtoOAGetTrendbarsRes().payloadType:
                 trendbars = proto_dict_connert(extracted_message.trendbar)
                 print("\n--- Trendbars converted to dict list ---")
@@ -128,6 +133,11 @@ class TraderClient:
                 print("Invalid command:", command)
         except Exception as e:
             print("Command execution error:", e)
+
+        if not self.account_authorized:
+            print("⏳ Περιμένω αυθεντικοποίηση λογαριασμού πριν συνεχίσω...")
+            reactor.callLater(1, self.execute_user_command)
+            return
 
         reactor.callLater(3, self.execute_user_command)
 
@@ -212,6 +222,12 @@ class TraderClient:
         reactor.callLater(int(timeInSeconds), sendProtoOAUnsubscribeSpotsReq, symbolId)
 
     def sendProtoOAReconcileReq(self, clientMsgId=None):
+        """
+        Αποστέλλει αίτημα συγχρονισμού (Reconcile) για να ενημερώσει τον client με την πλήρη και ακριβή κατάσταση του λογαριασμού από τον server.
+
+        ΠΑΡΑΜΕΤΡΟΙ:
+        clientMsgId -> (προαιρετικό) μοναδικό ID μηνύματος για παρακολούθηση
+        """
         request = ProtoOAReconcileReq()
         request.ctidTraderAccountId = self.account_id
         deferred = self.client.send(request, clientMsgId=clientMsgId)

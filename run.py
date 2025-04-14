@@ -10,7 +10,8 @@ if __name__ == "__main__":
     ACCOUNT_ID = 41974560
 
     q = Queue()
-    q.put("ProtoOATraderReq def789")
+    q.put("ProtoOAAssetClassListReq")
+    # q.put("ProtoOATraderReq def789")
     # q.put("ProtoOAGetTrendbarsReq 2 D1 1")
     # q.put("ProtoOAGetAccountListByAccessTokenReq def456")
 
