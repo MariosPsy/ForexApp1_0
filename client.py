@@ -25,12 +25,12 @@ class TraderClient:
             "ProtoOAAccountLogoutReq": self.sendProtoOAAccountLogoutReq, # Do NOT Test
             "ProtoOAAssetClassListReq": self.sendProtoOAAssetClassListReq, #ΟΚ
             "ProtoOASymbolCategoryListReq": self.sendProtoOASymbolCategoryListReq, #ΟΚ
-            "ProtoOASymbolsListReq": self.sendProtoOASymbolsListReq,
-            "ProtoOATraderReq": self.sendProtoOATraderReq,
-            "ProtoOAUnsubscribeSpotsReq": self.sendProtoOAUnsubscribeSpotsReq,
-            "ProtoOASubscribeSpotsReq": self.sendProtoOASubscribeSpotsReq,
-            "ProtoOAReconcileReq": self.sendProtoOAReconcileReq,
-            "ProtoOAGetTickDataReq": self.sendProtoOAGetTickDataReq,
+            "ProtoOASymbolsListReq": self.sendProtoOASymbolsListReq, #ΟΚ
+            "ProtoOATraderReq": self.sendProtoOATraderReq, #ΟΚ
+            "ProtoOAUnsubscribeSpotsReq": self.sendProtoOAUnsubscribeSpotsReq, #OK
+            "ProtoOASubscribeSpotsReq": self.sendProtoOASubscribeSpotsReq, #OK
+            "ProtoOAReconcileReq": self.sendProtoOAReconcileReq, #OK
+            "ProtoOAGetTickDataReq": self.sendProtoOAGetTickDataReq, # OK
             "ProtoOANewOrderReq": self.sendProtoOANewOrderReq,
             "NewMarketOrder": self.sendNewMarketOrder,
             "NewLimitOrder": self.sendNewLimitOrder,
@@ -219,7 +219,7 @@ class TraderClient:
             subscribeToSpotTimestamp)
         deferred = self.client.send(request, clientMsgId=clientMsgId)
         deferred.addErrback(self.on_error)
-        reactor.callLater(int(timeInSeconds), sendProtoOAUnsubscribeSpotsReq, symbolId)
+        reactor.callLater(int(timeInSeconds), self.sendProtoOAUnsubscribeSpotsReq, symbolId)
 
     def sendProtoOAReconcileReq(self, clientMsgId=None):
         """
