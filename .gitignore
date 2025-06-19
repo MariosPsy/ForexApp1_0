@@ -1,2 +1,24 @@
-# created by virtualenv automatically
-.venv/Lib
+# PyCharm
+.idea/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environments
+venv/
+.venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+
+# CSV/logs
+
+
+# Άλλα
+*.bak
+*.swp
+*.tmp
