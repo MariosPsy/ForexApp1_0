@@ -10,7 +10,7 @@ if __name__ == "__main__":
     ACCOUNT_ID = 41974560
 
     q = Queue()
-    q.put("ProtoOAGetTickDataReq 3 ASK 1")
+    q.put("ProtoOAGetTrendbarsReq 70 D1 1")
 
 
     marios_trader = TraderClient(CLIENT_ID, CLIENT_SECRET, ACCESS_TOKEN, ACCOUNT_ID, command_queue=q)

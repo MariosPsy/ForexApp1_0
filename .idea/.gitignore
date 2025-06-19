@@ -1,0 +1,57 @@
+# Python
+
+**pycache**/
+\*.py\[cod]
+\*.so
+\*.pyd
+\*.pyo
+
+# Περιβάλλοντα
+
+env/
+venv/
+.venv/
+ENV/
+
+# IDE αρχεία (PyCharm / IntelliJ)
+
+.idea/
+\*.iml
+
+# Jupyter Notebooks
+
+.ipynb\_checkpoints/
+\*.ipynb\_checkpoints
+
+# Log files
+
+\*.log
+
+# Αρχεία συστήματος
+
+.DS\_Store
+Thumbs.db
+desktop.ini
+
+# Backup / προσωρινά αρχεία
+
+\*\~
+\*.bak
+\*.swp
+\*.tmp
+
+# dotenv config (αν υπάρχει)
+
+.env
+.env.\*
+
+# Git configuration αρχεία (αν δεν θέλεις να ανέβουν)
+
+.gitattributes
+.githooks/
+
+# (Προαιρετικά) Αγνόηση αρχείων δεδομένων
+
+# \*.csv
+
+# \*.tsv

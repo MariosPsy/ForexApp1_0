@@ -1,0 +1,208 @@
+C:\Users\Μαρία\Desktop\Marios\Programming\Python\ForexApp1_0\.venv\Scripts\python.exe C:\Users\Μαρία\Desktop\Marios\Programming\Python\ForexApp1_0\run.py
+Connected!
+
+--- New Message Received ---
+Payload Type: 2101
+Extracted message content:
+
+Sending account authorization...
+
+--- New Message Received ---
+Payload Type: 2103
+Extracted message content:
+ctidTraderAccountId: 41974560
+
+✅ Λογαριασμός αυθεντικοποιήθηκε επιτυχώς.
+[Queue Command] Executing: ProtoOASubscribeSpotsReq 1 30 True
+
+--- New Message Received ---
+Payload Type: 2131
+Extracted message content:
+ctidTraderAccountId: 41974560
+symbolId: 1
+bid: 113656
+ask: 113656
+sessionClose: 113146
+timestamp: 1745498488269
+
+
+--- New Message Received ---
+Payload Type: 2128
+Extracted message content:
+ctidTraderAccountId: 41974560
+
+No command in queue, skipping...
+
+--- New Message Received ---
+Payload Type: 2131
+Extracted message content:
+ctidTraderAccountId: 41974560
+symbolId: 1
+bid: 113655
+ask: 113655
+timestamp: 1745498488732
+
+
+--- New Message Received ---
+Payload Type: 2131
+Extracted message content:
+ctidTraderAccountId: 41974560
+symbolId: 1
+bid: 113656
+ask: 113656
+timestamp: 1745498489026
+
+
+--- New Message Received ---
+Payload Type: 2131
+Extracted message content:
+ctidTraderAccountId: 41974560
+symbolId: 1
+bid: 113657
+ask: 113657
+timestamp: 1745498489530
+
+
+--- New Message Received ---
+Payload Type: 2131
+Extracted message content:
+ctidTraderAccountId: 41974560
+symbolId: 1
+bid: 113656
+ask: 113656
+timestamp: 1745498489968
+
+No command in queue, skipping...
+No command in queue, skipping...
+No command in queue, skipping...
+No command in queue, skipping...
+No command in queue, skipping...
+No command in queue, skipping...
+
+--- New Message Received ---
+Payload Type: 2131
+Extracted message content:
+ctidTraderAccountId: 41974560
+symbolId: 1
+bid: 113657
+ask: 113657
+timestamp: 1745498492001
+
+
+--- New Message Received ---
+Payload Type: 2131
+Extracted message content:
+ctidTraderAccountId: 41974560
+symbolId: 1
+bid: 113656
+ask: 113656
+timestamp: 1745498492366
+
+No command in queue, skipping...
+No command in queue, skipping...
+No command in queue, skipping...
+
+--- New Message Received ---
+Payload Type: 2131
+Extracted message content:
+ctidTraderAccountId: 41974560
+symbolId: 1
+bid: 113657
+ask: 113657
+timestamp: 1745498494122
+
+No command in queue, skipping...
+No command in queue, skipping...
+No command in queue, skipping...
+
+--- New Message Received ---
+Payload Type: 2131
+Extracted message content:
+ctidTraderAccountId: 41974560
+symbolId: 1
+bid: 113658
+ask: 113658
+timestamp: 1745498494517
+
+No command in queue, skipping...
+
+--- New Message Received ---
+Payload Type: 2131
+Extracted message content:
+ctidTraderAccountId: 41974560
+symbolId: 1
+bid: 113657
+ask: 113657
+timestamp: 1745498494999
+
+No command in queue, skipping...
+No command in queue, skipping...
+
+--- New Message Received ---
+Payload Type: 2131
+Extracted message content:
+ctidTraderAccountId: 41974560
+symbolId: 1
+bid: 113656
+ask: 113656
+timestamp: 1745498495244
+
+No command in queue, skipping...
+
+--- New Message Received ---
+Payload Type: 2131
+Extracted message content:
+ctidTraderAccountId: 41974560
+symbolId: 1
+bid: 113654
+ask: 113654
+timestamp: 1745498495476
+
+No command in queue, skipping...
+
+--- New Message Received ---
+Payload Type: 2131
+Extracted message content:
+ctidTraderAccountId: 41974560
+symbolId: 1
+bid: 113653
+ask: 113653
+timestamp: 1745498495956
+
+No command in queue, skipping...
+
+--- New Message Received ---
+Payload Type: 2131
+Extracted message content:
+ctidTraderAccountId: 41974560
+symbolId: 1
+bid: 113652
+ask: 113652
+timestamp: 1745498496164
+
+No command in queue, skipping...
+
+--- New Message Received ---
+Payload Type: 2131
+Extracted message content:
+ctidTraderAccountId: 41974560
+symbolId: 1
+bid: 113653
+ask: 113653
+timestamp: 1745498496906
+
+
+--- New Message Received ---
+Payload Type: 2131
+Extracted message content:
+ctidTraderAccountId: 41974560
+symbolId: 1
+bid: 113656
+ask: 113656
+timestamp: 1745498497133
+
+No command in queue, skipping...
+Disconnected: [Failure instance: Traceback (failure with no frames): <class 'twisted.internet.error.ConnectionLost'>: Connection to the other side was lost in a non-clean fashion: Connection lost.
+]
+
+Process finished with exit code 0
