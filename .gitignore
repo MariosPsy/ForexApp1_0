@@ -1,24 +1,47 @@
-# PyCharm
-.idea/
-
-# Python
+# Python compiled files
 __pycache__/
-*.pyc
-*.pyo
+*.py[cod]
+*.so
 *.pyd
+*.pyo
 
-# Environments
+# Python virtual environments
+env/
 venv/
 .venv/
+ENV/
 
-# Jupyter
+# IDE αρχεία (PyCharm / IntelliJ)
+.idea/
+*.iml
+
+# Jupyter Notebooks
+*.ipynb
 .ipynb_checkpoints/
 
+# Log files
+*.log
 
-# CSV/logs
+# System files
+.DS_Store
+Thumbs.db
+desktop.ini
 
-
-# Άλλα
+# Backup / temporary files
+*~
 *.bak
 *.swp
 *.tmp
+
+# dotenv config (αν υπάρχει)
+.env
+.env.*
+
+# Git configuration αρχεία (αν δεν θέλεις να ανέβουν)
+.gitattributes
+.githooks/
+
+# Προσωρινοί φάκελοι ανάλυσης
+_trial_temp/
+
+# 📌 Σημείωση: Κρατάμε τα αρχεία .csv στο Git
