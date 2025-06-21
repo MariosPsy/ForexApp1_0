@@ -1,13 +1,19 @@
 from multiprocessing import Queue
 from client import TraderClient
+import os
 
 
 if __name__ == "__main__":
-    # Παράδειγμα τιμών - αντικατάστησέ τα με τα δικά σου credentials
-    CLIENT_ID = "12898_X4w5r7eDmhqZcSjm7zBORbk9JRAbyO9a8RRvYvqQ3MTUdotn9v"
-    CLIENT_SECRET = "AbHdcTMPx3oiBFxIWE1LqtG7kpDbO39Uhcj3iiCo7xKmYKN1AI"
-    ACCESS_TOKEN = "ef8MYJ8nhmfkWS9kRCrKQGoLdEXRkHcPGAtG_pRnamQ"
-    ACCOUNT_ID = 41974560
+    """Run the Trader client using credentials from environment variables."""
+    CLIENT_ID = os.getenv("CLIENT_ID")
+    CLIENT_SECRET = os.getenv("CLIENT_SECRET")
+    ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
+    ACCOUNT_ID = int(os.getenv("ACCOUNT_ID", "0"))
+
+    if not all([CLIENT_ID, CLIENT_SECRET, ACCESS_TOKEN, ACCOUNT_ID]):
+        raise RuntimeError(
+            "Required credentials are not set. Please provide CLIENT_ID, CLIENT_SECRET, ACCESS_TOKEN and ACCOUNT_ID as environment variables."
+        )
 
     q = Queue()
     q.put("ProtoOAGetTrendbarsReq 70 D1 1")
