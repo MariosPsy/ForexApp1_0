@@ -1,6 +1,6 @@
 import pandas as pd
 
-def proto_dict_connert(trentbars):
+def proto_dict_convert(trentbars):
     trentbars_list = [
         {
             "volume": tb.volume,

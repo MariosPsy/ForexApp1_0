@@ -2,7 +2,7 @@ from ctrader_open_api import Client, Protobuf, TcpProtocol, EndPoints
 from ctrader_open_api.messages.OpenApiMessages_pb2 import *
 from ctrader_open_api.messages.OpenApiModelMessages_pb2 import *
 from twisted.internet import reactor
-from converters import proto_dict_connert
+from converters import proto_dict_convert
 import calendar
 import datetime
 
@@ -90,7 +90,7 @@ class TraderClient:
                 self.account_authorized = True
 
             if message.payloadType == ProtoOAGetTrendbarsRes().payloadType:
-                trendbars = proto_dict_connert(extracted_message.trendbar)
+                trendbars = proto_dict_convert(extracted_message.trendbar)
                 print("\n--- Trendbars converted to dict list ---")
                 print(trendbars)
                 print("--- CSV has been saved as trentbars_data.csv ---")
