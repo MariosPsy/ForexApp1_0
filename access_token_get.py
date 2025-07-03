@@ -8,21 +8,31 @@ from inputimeout import inputimeout, TimeoutOccurred
 import webbrowser
 import datetime
 import calendar
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 if __name__ == "__main__":
-    currentAccountId = 41974560
-    hostType = "demo"
+    currentAccountId = int(os.getenv("ACCOUNT_ID", "0"))
+    hostType = os.getenv("HOST_TYPE", "demo")
 
-    while hostType != "live" and  hostType != "demo":
+    if not currentAccountId:
+        raise RuntimeError("ACCOUNT_ID environment variable must be set")
+
+    while hostType != "live" and hostType != "demo":
         print(f"{hostType} is not a valid host type.")
         hostType = input("Host (Live/Demo): ")
 
-    appClientId = "12898_X4w5r7eDmhqZcSjm7zBORbk9JRAbyO9a8RRvYvqQ3MTUdotn9v"
-    appClientSecret = "AbHdcTMPx3oiBFxIWE1LqtG7kpDbO39Uhcj3iiCo7xKmYKN1AI"
-    isTokenAvailable = input("Do you have an access token? (Y/N): ").lower() == "y"
+    appClientId = os.getenv("CLIENT_ID")
+    appClientSecret = os.getenv("CLIENT_SECRET")
+    accessToken = os.getenv("ACCESS_TOKEN")
+    isTokenAvailable = accessToken is not None or input("Do you have an access token? (Y/N): ").lower() == "y"
 
-    accessToken = None
-    if isTokenAvailable == False:
+    if not appClientId or not appClientSecret:
+        raise RuntimeError("CLIENT_ID and CLIENT_SECRET environment variables must be set")
+
+    if not isTokenAvailable:
         appRedirectUri = input("App Redirect URI: ")
         auth = Auth(appClientId, appClientSecret, appRedirectUri)
         authUri = auth.getAuthUri()
@@ -35,7 +45,7 @@ if __name__ == "__main__":
             raise KeyError(token)
         print("Token: \n", token)
         accessToken = token["accessToken"]
-    else:
+    elif accessToken is None:
         accessToken = input("Access Token: ")
 
     client = Client(EndPoints.PROTOBUF_LIVE_HOST if hostType.lower() == "live" else EndPoints.PROTOBUF_DEMO_HOST, EndPoints.PROTOBUF_PORT, TcpProtocol)

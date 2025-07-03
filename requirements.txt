@@ -2,3 +2,4 @@ ctrader-open-api
 twisted
 protobuf
 inputimeout
+python-dotenv
